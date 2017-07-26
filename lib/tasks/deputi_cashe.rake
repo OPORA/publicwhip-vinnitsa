@@ -63,9 +63,8 @@ namespace :deputi_cashe do
         }
         ActiveRecord::Base.connection.execute(sql).each do |q|
           p q
-          friend = MpFriend.find_or_initialize_by(deputy_id:  m1.deputy_id, friend_deputy_id: q["deputy_id"])
+          friend = MpFriend.find_or_initialize_by(deputy_id:  m1.deputy_id, friend_deputy_id: q["deputy_id"], date_mp_friend: Date.strptime(date, '%Y-%m'))
           friend.count = q["count"]
-          friend.date_mp_friend = Date.strptime(date, '%Y-%m')
           friend.save
           p friend
         end
@@ -89,9 +88,8 @@ namespace :deputi_cashe do
           }
           ActiveRecord::Base.connection.execute(sql).each do |q|
             p q
-            friend = MpFriend.find_or_initialize_by(deputy_id:  m1.deputy_id, friend_deputy_id: q["deputy_id"])
+            friend = MpFriend.find_or_initialize_by(deputy_id:  m1.deputy_id, friend_deputy_id: q["deputy_id"], date_mp_friend: "9999-12-31" )
             friend.count = q["count"]
-            friend.date_mp_friend = "9999-12-31"
             friend.save
             p friend
           end

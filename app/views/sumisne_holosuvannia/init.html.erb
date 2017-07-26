@@ -129,8 +129,12 @@
                   val = d.values.sort(function (a,b) {
                       return a - b;
                   });
+                  if (val[1] == 0){
+                      return {party: d.party,  present: 0  }
+                  } else {
+                      return {party: d.party,  present: Math.round((val[0]/val[1])*100)  }
+                  }
 
-                  return {party: d.party,  present: Math.round((val[0]/val[1])*100)  }
               });
               result = result.sort(function (a,b) {
                   return b.present - a.present;

@@ -49,7 +49,7 @@ class DivisionsController < ApplicationController
                params[:min_date] = (Date.today() - 3.month).strftime('%d.%m.%Y')
                params[:max_date] = Date.today().strftime('%d.%m.%Y')
             elsif params[:last] == "1"
-              min_date = Date.strptime((Division.pluck(:date).last.strftime('%m.%Y')), '%m.%Y')
+              min_date = Date.strptime((Division.order(date: :asc).pluck(:date).last.strftime('%m.%Y')), '%m.%Y')
               params[:min_date] = min_date.strftime('%d.%m.%Y')
               params[:max_date] = (min_date + 1.month - 1.day).strftime('%d.%m.%Y')
             end

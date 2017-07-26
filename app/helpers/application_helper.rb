@@ -3,9 +3,9 @@ module ApplicationHelper
       controller.controller_path
   end
   def last_sessions_rada
-    Division.pluck(:date).last.strftime('%d.%m.%Y')
+    Division.order(date: :asc).pluck(:date).last.strftime('%d.%m.%Y')
   end
   def last_update_rada
-    Division.pluck(:updated_at).last.strftime('%d.%m.%Y / %H:%M')
+    Division.order(updated_at: :asc).pluck(:updated_at).last.strftime('%d.%m.%Y / %H:%M')
   end
 end

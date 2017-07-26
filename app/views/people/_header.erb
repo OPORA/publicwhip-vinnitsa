@@ -55,7 +55,7 @@
            data-stroke-colour="FFFFFF"
            data-stroke-spacing="0">
       </div>
-      відвідування засідань
+      <p style="margin-top:15px;">відвідування засідань</p>
     </div>
     <script>
         $( document ).ready(function() {
@@ -66,7 +66,7 @@
     <div class="col-4">
       <img class="media-object circle-photo " src="/image/<%= mp.deputy_id %>.png" alt="<%=  mp.full_name %>" height="200">
       <p class="frac"><%= member_role(mp.faction, mp.okrug).html_safe %></p>
-      <p>Обрано за списком партії з 10.2014</p>
+      <p><!--Обрано за списком партії з --></p>
     </div>
     <div class="col-4 text-uppercase">
       <div id="rebellions-fraction"
@@ -78,7 +78,7 @@
            data-stroke-colour="FFFFFF"
            data-stroke-spacing="0">
       </div>
-      голосування проти фракції
+      <p style="margin-top:15px;">голосування проти фракції</p>
     </div>
     <script>
         $( document ).ready(function() {
