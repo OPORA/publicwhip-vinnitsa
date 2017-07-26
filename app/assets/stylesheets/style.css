@@ -302,7 +302,7 @@ h3.background-line {
     display:block;
 }
 #first-block [class*="row"] + [class*="row"], #second-block [class*="row"] + [class*="row"]{
-    margin: 25px 0 0 0;
+    margin-top: 25px;
 }
 #list_division [class*="row"]{
     margin: 25px 0 0 0;
@@ -363,6 +363,8 @@ h3.background-line {
     font-weight: 500;
     line-height: 22px;
     margin-bottom: 37px;
+    padding-left: 25px;
+
 }
 .card-text p::first-letter { text-transform: capitalize !important; }
 .checkin {
@@ -527,4 +529,8 @@ footer span+span{
 }
 .panel-heading a.collapsed .chevron:after {
     content: "\f078";
+}
+#first-block [class*="row"] + [class*="row"], #second-block [class*="row"] + [class*="row"] {
+    /*margin: 0 0 0 0;*/
+    margin-top: 25px;
 }
