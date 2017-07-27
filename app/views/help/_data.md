@@ -17,7 +17,7 @@
 
 [https://vinnytsia.rada4you.org/api/divisions.json?page=2](https://vinnytsia.rada4you.org/api/divisions.json?page=2) 
 
-[https://vinnytsia.rada4you.org/api/division.json?division=1](https://vinnytsia.rada4you.org/api/division.csv?division=1)
+[https://vinnytsia.rada4you.org/api/division.json?division=1](https://vinnytsia.rada4you.org/api/division.json?division=1)
 
 ##CSV АРІ
 #по депутатам
@@ -33,4 +33,4 @@
 
 [https://vinnytsia.rada4you.org/api/division.csv?division=1&filter=whips](https://vinnytsia.rada4you.org/api/division.csv?division=1&filter=whips)
 
-[https://vinnytsia.rada4you.org/api/division.csv?division=1&filter=info](https://vinnytsia.rada4you.org/api/division.csv?division=1&filter=whips)
+[https://vinnytsia.rada4you.org/api/division.csv?division=1&filter=info](https://vinnytsia.rada4you.org/api/division.csv?division=1&filter=info)
