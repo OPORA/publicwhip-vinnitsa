@@ -3,6 +3,7 @@ class Division < ApplicationRecord
   has_many :votes
   has_many :mps, through: :votes
   has_one :division_info
+  has_many :division_infos
   has_many :whips
 
 

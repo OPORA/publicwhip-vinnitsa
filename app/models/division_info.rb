@@ -1,10 +1,12 @@
 class DivisionInfo < ApplicationRecord
   belongs_to :division
 
-  def i_to_csv
+  def self.to_csv
     CSV.generate do |csv|
-      csv << self.class.column_names
-      csv << self.class.attributes.values_at(*self.class.column_names)
+      csv << self.column_names
+      all.each do |mp|
+        csv << mp.attributes.values_at(*column_names)
+      end
     end
   end
 

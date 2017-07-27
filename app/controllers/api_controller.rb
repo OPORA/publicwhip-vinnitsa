@@ -41,7 +41,7 @@ class ApiController < ApplicationController
           })
       }
       if params[:filter] == "info"
-        format.csv {send_data @division.division_info.i_to_csv}
+        format.csv {send_data @division.division_infos.to_csv}
       elsif params[:filter] == "whips"
         format.csv {send_data @division.whips.to_csv}
       else
