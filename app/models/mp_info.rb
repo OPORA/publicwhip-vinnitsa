@@ -8,9 +8,11 @@ class MpInfo < ApplicationRecord
   end
   def self.mp_to_csv
     CSV.generate do |csv|
-      csv << column_names
+      attrib_first = %w{deputy_id}
+      attrib = %w{rebellions not_voted	absent	against	aye_voted	abstain	votes_possible	votes_attended date_mp_info}
+      csv << attrib_first + %w{full_name}  + attrib
       all.each do |mp|
-        csv << mp.attributes.values_at(*column_names)
+        csv << mp.attributes.values_at(*attrib_first) + [mp.mp.full_name] + mp.attributes.values_at(*attrib)
       end
     end
   end

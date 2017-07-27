@@ -53,7 +53,7 @@ class ApiController < ApplicationController
     @mps = Mp.all
     respond_to do |format|
       format.json  {render :json => @mps.to_json(except: [:id, :created_at,  :updated_at ])}
-      format.csv  { send_data @mps.to_csv }
+      format.csv  { send_data @mps.to_csv  }
     end
   end
   def mp
@@ -86,7 +86,7 @@ class ApiController < ApplicationController
                                                   )
         }
 
-        format.csv  { send_data  @mp.mp_infos.mp_to_csv }
+        format.csv  { send_data  @mp.mp_infos.mp_to_csv , :filename =>  @mp.full_name + '.csv' }
       end
     else
       respond_to do |format|
