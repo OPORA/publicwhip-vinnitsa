@@ -1,4 +1,18 @@
 <script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+    $( document ).ready(function() {
+        $("#downpdf").click(function () {
+            html2canvas($('#png_div'), {
+                onrendered: function (canvas) {
+                    var link = document.getElementById('downpdf');
+                    link.setAttribute('download', '<%= mp.full_name %>.png');
+                    link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+                }
+            });
+        });
+    });
+</script>
+<div id="png_div">
 <div id="depytat" class="container">
   <h1 class="media-heading center-justified"><%=  mp.full_name  %></h1>
 
@@ -25,21 +39,27 @@
     </ul>
     <ul class="social col-4 pull-right text-uppercase">
       <li>
+        <%= link_to api_mp_path(deputy_id: mp.deputy_id, format: :csv) do %>
                     <span class="fa-stack ">
                       <i class="fa fa-square-o fa-stack-2x"></i>
                       <i class="fa  fa-download  fa-stack-1x"></i>
-                    </span>
-        <a href="" >csv</a></li>
-      <li><span class="fa-stack ">
+                    </span>csv
+        <% end %>
+      </li>
+      <li>
+        <a href="javascript:void(0)" id ="downpdf">
+          <span class="fa-stack ">
                       <i class="fa fa-square-o fa-stack-2x"></i>
                       <i class="fa  fa-download  fa-stack-1x"></i>
-                    </span>
-        <a href="" >png</a></li>
+          </span> png
+        </a>
+      </li>
       <li>
+
                     <span class="fa-stack ">
                     <i class="fa  fa-share-alt  fa-stack-1x"></i>
                         </span>
-        <a href="" >поширити</a>
+        поширити</a>
       </li>
     </ul>
   </div>
@@ -88,7 +108,7 @@
     </script>
   </div>
 </div>
-</div>
+
 
 <div id="stat" class="container-fluid ">
   <div class="container">
@@ -196,5 +216,6 @@
 
     </ul>
   </div>
+</div>
 </div>
 </div>

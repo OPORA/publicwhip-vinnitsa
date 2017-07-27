@@ -11,4 +11,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
-Rails.application.config.assets.precompile += %w( about.scss  bootstrap.css  bootstrap.css.map  divisions.scss  errors.scss  help.scss  home.scss  people.scss  style.css  sumisne_holosuvannia.scss  ukr_datepiker.js)
+Rails.application.config.assets.precompile += %w( about.scss  bootstrap.css  bootstrap.css.map  divisions.scss  errors.scss  help.scss  home.scss  people.scss  style.css  sumisne_holosuvannia.scss  ukr_datepiker.js html2canvas.js)
