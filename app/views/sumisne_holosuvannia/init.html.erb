@@ -1,31 +1,14 @@
 <% content_for :title, "Сумісне Голосуванн — Як Голосує Твій Депутат?" %>
 <script src="//d3js.org/d3.v4.min.js"></script>
 <script>
-    //search
+    //click results
     window.onload = function() {
-        var availableTags = [
-            <% @party.each do |m| %>
-            "<%= m %>",
-            <% end %>
-        ];
-        $( "#party" ).autocomplete({
-            source: availableTags
-        });
         $("#show_month").click(function(e){
             $("#sort-month").toggleClass("hide");
         });
         $(document).on('click',function(){
             $('.collapse').collapse('hide');
-        })
-        // load page start ajax GET
-//        $.ajax({
-//            type: "GET",
-            <!--<%# if params[:filter] %>-->
-//            url: "<%#= people_path(sort: params[:sort], filter: params[:filter], format: :js, per: params[:per]) %>"
-            <!--<%# else %>-->
-//            url: "<%#= people_path(sort: params[:sort], filter_min: params[:filter_min], filter_max: params[:filter_max], format: :js, per: params[:per]) %>"
-            <!--<%# end %>-->
-//        });
+        });
     };
 </script>
 <div id="first-block" class="container people">
@@ -39,8 +22,13 @@
                           <span class="fa-stack">
                             <i class="fa fa-search fa-stack-1x fa-inverse" aria-hidden="true"></i>
                           </span>
-        <%= text_field_tag(:party, params[:party]=="Блок Петра Порошенка" ? '' : params[:party] , class: "form-control mr-sm-2" , placeholder: "напр., Блок Петра Порошенка" ) %>
+        <%= text_field_tag(:party, params[:party]=="Блок Петра Порошенка" ? '' : params[:party] , class: "form-control mr-sm-2" , placeholder: "напр., Блок Петра Порошенка", list: "party-datalist") %>
         <i class="fa fa-chevron-down arrow-icon" aria-hidden="true"></i>
+          <datalist id="party-datalist">
+            <% @party.each do |m| %>
+                <option value="<%= m %>"></option>
+            <% end %>
+          </datalist>
         <% end %>
     </div>
 </div>
