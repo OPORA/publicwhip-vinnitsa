@@ -13,6 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 // require_tree .
+//-Fix bug back return js code
+$(window).on("popstate", function(e) {
+    history.back();
+});
+//----
 $('button.btn.glyphicon').click(function () {
     if($(this).hasClass('glyphicon-chevron-down'))
     {
