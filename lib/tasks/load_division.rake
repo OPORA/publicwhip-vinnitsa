@@ -21,6 +21,7 @@ namespace :load_division do
         division.votes.destroy_all
         d[1]["votes"].each do |v|
           next if v["voter_id"] == 1004
+          p v["voter_id"]
           mp = mps.find{|m| m["deputy_id"] == v["voter_id"] }.id
           division.votes.create(deputy_id: mp, vote: v["result"] )
         end
