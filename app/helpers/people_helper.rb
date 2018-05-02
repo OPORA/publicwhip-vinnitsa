@@ -6,7 +6,9 @@ module PeopleHelper
   def member_role(faction, okrug)
     faction = "Позафракційний" if faction.nil?
     first =  '"' + faction +  '"'
-    unless okrug.nil?
+    if okrug == 0
+      first +  "<br>" + "перший кандидат"
+    elsif not okrug.nil?
       first +  "<br>" + "обрано по округу номер #{okrug}"
     else
       first
