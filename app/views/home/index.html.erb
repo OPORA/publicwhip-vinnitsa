@@ -1,15 +1,15 @@
 <% content_for :title, "Вони голосують для тебе — Як Голосує Твій Депутат?" %>
-<div class="col-8 " style="margin: 0 auto;">
-  <div class="col-12">
-    <p class="text-uppercase text-center text-q">Як депутати голосують за питання, які важливі для тебе?</p>
+<div class="row justify-content-lg-center"  >
+  <div class="col-lg-8 text-q">
+    <p class="text-uppercase text-center ">Як депутати голосують за питання, які важливі для тебе?</p>
   </div>
-  <div class="col-12">
+  <div class="col-lg-8">
     <%= form_tag(search_mp_path, method: "get", class: "form-inline mt-2 mt-md-0", id: "search-main" ) do  %>
                           <span class="fa-stack">
                               <i class="fa fa-circle fa-stack-2x"></i>
                               <i class="fa fa-search fa-stack-1x fa-inverse" aria-hidden="true"></i>
                           </span>
-        <%= text_field_tag(:mp, params[:mp] , class: "form-control mr-sm-2" , placeholder: "напр., Андреєв Андрій Андрійович", list: "members-datalist" ) %>
+        <%= text_field_tag(:mp, params[:mp] , class: "form-control mr-sm-2" , placeholder: "напр., " + placeholder, list: "members-datalist" ) %>
         <i class="fa fa-chevron-down arrow-icon" aria-hidden="true"></i>
         <datalist id="members-datalist">
           <% @mps.each do |m| %>
@@ -26,11 +26,11 @@
     <% if i % 2 == 0  %>
     <div class="row">
     <% end %>
-      <div class="col-6">
+      <div class="col-lg-6">
         <%= link_to divisions_show_path(d.date, d.number), class: "" do %>
         <div class="col-12 pull-right card">
-          <div class="col12 text-uppercase">
-            <p class="approve"><i class="fa <%=  d.result.include?("НЕ ПРИЙНЯТО") ? "fa-times-circle" : "fa-check-circle"  %>" aria-hidden="true"></i> <%= d.result %></p>
+          <div class="text-uppercase">
+            <p class="approve"><i class="fa <%=  d.result == "Прийнято" ? "fa-check-circle" : "fa-times-circle"  %>" aria-hidden="true"></i> <%= d.result %></p>
             <p class="card-date"><%= d.date.strftime('%d.%m.%Y') %> / <%= Time.parse(d.clock_time).strftime('%H:%M') %></p>
           </div>
           <div class="row card-text">
@@ -57,15 +57,16 @@
 </div>
 
 <div id="second-block" class="container-fluid">
-  <div class="container">
     <div class="col-12"><h3 class="text-uppercase text-center background-line">Прогульники засідань</h3></div>
+  <div class="container">
     <% @top_mp_rebellions.each_with_index do |mp, i| %>
-    
+
+
       <% if i % 2 == 0  %>
       <div class="row">
       <% end %>
         
-        <div class="col-6">
+        <div class="col-lg-6">
           <div class="col-12 card card-person ">
           <%= link_to show_people_path(mp.url_name), class: "" do %>
             <div class="row">
@@ -94,8 +95,9 @@
       <% if i % 2 == 1  %>
       </div>
       <% end %>
+
     
     <% end %>
-    <div class="col-12"><%= link_to  '<h4 class="text-uppercase text-center">До відвідування засідань <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></h4>'.html_safe, people_path(sort: :attendance) %></div>
   </div>
+    <div class="col-12"><%= link_to  '<h4 class="text-uppercase text-center">До відвідування засідань <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></h4>'.html_safe, people_path(sort: :attendance) %></div>
 </div>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  party: MyString
+  friend_party: MyString
+  date_party_friend: 2017-11-14
+  count: 1
+
+two:
+  party: MyString
+  friend_party: MyString
+  date_party_friend: 2017-11-14
+  count: 1

@@ -4,7 +4,7 @@ class PeopleController < ApplicationController
     mps = Mp.includes(:mp_info).where(end_date: nil)
     @mp = mps.order(:last_name)
     if params[:sort] == "faction"
-      @filter = mps.order(:faction).map{|m| m.faction }.uniq.delete_if{|m| m.nil?}
+      @filter = mps.order(:faction).map{|m| m.faction }.uniq
       if params[:filter].nil?
         params[:filter] = @filter.first
       end

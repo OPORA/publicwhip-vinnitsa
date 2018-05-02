@@ -22,7 +22,7 @@
                           <span class="fa-stack">
                             <i class="fa fa-search fa-stack-1x fa-inverse" aria-hidden="true"></i>
                           </span>
-        <%= text_field_tag(:party, params[:party]=="Блок Петра Порошенка" ? '' : params[:party] , class: "form-control mr-sm-2" , placeholder: "напр., Блок Петра Порошенка", list: "party-datalist") %>
+        <%= text_field_tag(:party, params[:example_party] == 1 ? '' : params[:party] , class: "form-control mr-sm-2" , placeholder: "напр., " + params[:party], list: "party-datalist") %>
         <i class="fa fa-chevron-down arrow-icon" aria-hidden="true"></i>
           <datalist id="party-datalist">
             <% @party.each do |m| %>
@@ -85,7 +85,7 @@
   </div>
   <script>
       var colors = ["#FE6162", "#01AFFF", "#B3B2FE", "#FFDD2D", "#84F1FE", "#F765B2"];
-      d3.json("<%= sumisne_holosuvannia_api_path(month: params[:month]) %>", function (data) {
+      d3.json("<%= sumisne_holosuvannia_api_path(month: params[:month], party:  params[:party]) %>", function (data) {
           window.addEventListener('resize', function (event) {
               createGrafic(data);
           });
@@ -105,8 +105,8 @@
 
                   });
               var party = [];
-
-              firs_party = nested_data.find(x => x.Party == "<%= params[:party] %>");
+              console.log(nested_data);
+              firs_party = nested_data.find(x => x.Party == '<%= params[:party].html_safe %>');
               nested_data.forEach(function (p, i) {
                     if (p.Party != firs_party.Party) {
                         party.push({party: p.Party, values: [p.Value, firs_party.Value ]})
@@ -138,7 +138,7 @@
               var g = svg.append("g")
                   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
               x.domain(result.map(function(d) { return d.party; }));
-              y.domain([0, d3.max(result, function(d) { return d.present; })]);
+              y.domain([0, 100]);//d3.max(result, function(d) { return d.present; })
 
               d3.select('.domain')
                   .attr("stroke","none");

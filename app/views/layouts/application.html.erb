@@ -20,19 +20,20 @@
 
   <%= stylesheet_link_tag 'bootstrap', media: 'all', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag 'style', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'media', media: 'all', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag body_class, media: 'all', 'data-turbolinks-track' => true %>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/css/bootstrap-select.min.css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
   <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-70897601-8"></script>
+   <script async src="https://www.googletagmanager.com/gtag/js?id=<%= Settings.gtag %>"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 
-gtag('config', 'UA-70897601-8');
+gtag('config', '<%= Settings.gtag %>');
 </script>
   <%= csrf_meta_tags %>
 </head>
@@ -46,7 +47,7 @@ gtag('config', 'UA-70897601-8');
           <span class="navbar-toggler-icon"></span>
         </button>
         <% if controller.controller_path == "home" %>
-          <%= link_to "<p><i class='fa fa-circle fa-stack-1x'></i><span class='first-word'>vinnytsia</span>.Rada4You.org</p>".html_safe, root_path, class: "navbar-brand text-uppercase logo" %>
+          <%= link_to "<p><i class='fa fa-circle fa-stack-1x'></i><span class='first-word'>#{Settings.name_site}</span>.Rada4You.org</p>".html_safe, root_path, class: "navbar-brand text-uppercase logo" %>
         <% end %>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
@@ -70,43 +71,44 @@ gtag('config', 'UA-70897601-8');
         </div>
       </nav>
       <% if controller.controller_path == "home" %>
-        <div id="info" class="container-fluid">
-          <div class="col-12">
-            <div class="col-2 update-data pull-right pull-2">
-                          <span class="fa-stack">
+        <div id="info" class="container">
+            <div class="row justify-content-end">
+                <div class="col-lg-3 col-6 update-data">
+                   <span class="fa-stack">
                               <i class="fa fa-circle fa-stack-2x"></i>
                               <i class="fa fa-clock-o fa-stack-1x fa-inverse" aria-hidden="true"></i>
                           </span>
-              <p class="text-uppercase">Оновлення даних</p>
-              <p><%= last_update_rada %></p>
-            </div>
-            <div class="col-2 rada-date pull-right push-2">
-                          <span class="fa-stack">
+                    <p class="text-uppercase">Оновлення даних</p>
+                    <p><%= last_update_rada %></p>
+                </div>
+                <div class="col-lg-3 col-6 rada-date">
+                    <span class="fa-stack">
                               <i class="fa fa-circle fa-stack-2x"></i>
                               <i class="fa fa-clock-o fa-stack-1x fa-inverse" aria-hidden="true"></i>
                           </span>
-              <p class="text-uppercase">Засідання міськради</p>
-              <p><%= last_sessions_rada() %></p>
+                    <p class="text-uppercase">Засідання міськради</p>
+                    <p><%= last_sessions_rada() %></p>
+                </div>
             </div>
-          </div>
         </div>
         <div style="clear: both;"></div>
       <% end %>
 
       <% if controller.controller_path != "home" %>
             </header>
-          <div id="info" class="container-fluid">
-            <div class="col-12">
-              <%= link_to "<p><i class='fa fa-circle fa-stack-1x'></i><span class='first-word'>vinnytsia</span>.Rada4You.org</p>".html_safe, root_path, class: "col-4 navbar-brand text-uppercase logo", id: "logo" %>
+          <div id="info" class="container">
+              <%= link_to "<p><i class='fa fa-circle fa-stack-1x'></i><span class='first-word'>#{Settings.name_site}</span>.Rada4You.org</p>".html_safe, root_path, class: "col-4 navbar-brand text-uppercase logo", id: "logo" %>
+
+              <div class="row justify-content-end">
               <% if controller.controller_path != "errors" %>
-              <div class="col-3 update-data pull-right pull-3">
+              <div class="col-lg-3 col-6 update-data">
                           <span class="fa-stack">
                               <i class="fa fa-clock-o fa-stack-1x fa-inverse" aria-hidden="true"></i>
                           </span>
                 <p class="text-uppercase">Оновлення даних</p>
                 <p><%= last_update_rada %></p>
               </div>
-              <div class="col-3 rada-date pull-right push-3">
+              <div class="col-lg-3 col-6 rada-date">
                           <span class="fa-stack">
                               <i class="fa fa-clock-o fa-stack-1x fa-inverse" aria-hidden="true"></i>
                           </span>
@@ -155,7 +157,7 @@ gtag('config', 'UA-70897601-8');
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">
-                      <%= link_to "<p><i class='fa fa-circle fa-stack-1x'></i><span class='first-word'>vinnytsia</span>.Rada4You.org</p>".html_safe, root_path, class: "col-4 navbar-brand text-uppercase logo" %>
+                      <%= link_to "<p><i class='fa fa-circle fa-stack-1x'></i><span class='first-word'>Lviv</span>.Rada4You.org</p>".html_safe, root_path, class: "col-4 navbar-brand text-uppercase logo" %>
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>

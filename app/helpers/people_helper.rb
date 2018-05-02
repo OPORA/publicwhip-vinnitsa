@@ -1,5 +1,8 @@
 module PeopleHelper
-
+  def placeholder
+    mp = Mp.order("RANDOM()").first
+    return mp.last_name + " " + mp.first_name + " " + mp.middle_name
+  end
   def member_role(faction, okrug)
     faction = "Позафракційний" if faction.nil?
     first =  '"' + faction +  '"'

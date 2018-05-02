@@ -1,7 +1,7 @@
 <% content_for :title, "Голосування — Як Голосує Твій Депутат?" %>
 
 <div id="divisionshow" class="container">
-    <h1 class="text-uppercase center-justified text-xs-center">Голосування вінницької міськради</h1>
+    <h1 class="text-uppercase center-justified text-xs-center">Голосування львівської міськради</h1>
 
     <div class="row">
         <div class="col">
@@ -41,7 +41,7 @@
                 <div class="row">
                     <div class="col text-uppercase text-xs-center">
                         <p class="approve col-12">
-                            <i class="fa <%=  d.result.include?("НЕ ПРИЙНЯТО") ? "fa-times-circle" : "fa-check-circle"  %>" aria-hidden="true"></i>
+                            <i class="fa <%=  d.result.gsub(/[[:space:]]/, '') == "Прийнято" ? "fa-check-circle" : "fa-times-circle"  %>" aria-hidden="true"></i>
                             <span><%= d.result %></span></p>
                         <p class="card-date"><%= d.date.strftime('%d.%m.%Y') %>, <%= Time.parse(d.clock_time).strftime('%H:%M') %>  </p>
                     </div>

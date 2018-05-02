@@ -1,0 +1,67 @@
+@media screen and (max-width: 1024px) {
+
+  .navbar-light .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+  .navbar-light .navbar-toggler {
+    border: none;
+  }
+  .logo p {
+    font-size: 12px;
+  }
+  .text-q{
+    font-size: 20px;
+    margin-bottom: 75px;
+  }
+  #search-main input[type="text"], .bootstrap-select > .dropdown-toggle.bs-placeholder{
+    font-size:14px;
+  }
+  #first-block h3, #second-block h3{
+    font-size:16px;
+    margin-bottom: 3rem;
+  }
+  .card-text{
+    margin-bottom: 0;
+  }
+  #first-block .card, #second-block .card, #profile .card{
+    margin-bottom: 10px;
+    min-height: 230px;
+  }
+
+  #first-block [class*="row"] + [class*="row"], #second-block [class*="row"] + [class*="row"]{
+    margin-top:  0;
+  }
+
+  [class*="row"]  [class*="col-lg-6"]{
+    margin-top:  15px;
+  }
+  #second-block .check, #list_division [class*="row"] .check , #profile .check{
+    margin-left: -90px;
+  }
+  .card-name, .card-fraction, .card-elected{
+    padding-left: 22px;
+  }
+  footer span, footer div [class*="row"] p a{
+    font-size: 9px;
+    line-height: 11px;
+  }
+  footer div [class*="row"] > div{
+    margin-bottom: 25px;
+  }
+  #first-block.people .card {
+    padding: 0;
+  }
+  /*footer .fa-inverse{
+    font-size: 14px
+  }*/
+  #info .logo p{
+    position: absolute;
+    top: -120px;
+    color: #ffffff;}
+}
+
+@media (min-width: 360px) and (max-width: 1200px) {
+  footer span + span{
+    margin-left: 10px;
+  }
+}
