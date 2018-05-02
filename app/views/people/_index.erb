@@ -31,7 +31,11 @@
       <ul class="sort-distric">
         <% @filter.each do |f| %>
             <li class="<%= f == params[:filter].to_i ? "active-fon-circle" : "" %>">
-              <%= link_to(f, people_path(sort: "distric" , filter: f), remote: true)  %>
+              <% if f == 0 %>
+                  <%= link_to("Перший кандидат", people_path(sort: "distric" , filter: f), remote: true)  %>
+              <% else %>
+                  <%= link_to(f, people_path(sort: "distric" , filter: f), remote: true)  %>
+              <% end %>
             </li>
         <% end %>
       </ul>
