@@ -10,6 +10,19 @@
             $('.collapse').collapse('hide');
         });
     };
+
+    $( document ).ready(function() {
+        $("#downpdf").click(function () {
+            html2canvas($('#png_div'), {
+                onrendered: function (canvas) {
+                    var link = document.getElementById('downpdf');
+                    link.setAttribute('download', 'Сумісне Голосування <%= params[:party] %>.png');
+                    link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+                }
+            });
+        });
+    });
+
 </script>
 <div id="first-block" class="container people">
 
@@ -22,7 +35,7 @@
                           <span class="fa-stack">
                             <i class="fa fa-search fa-stack-1x fa-inverse" aria-hidden="true"></i>
                           </span>
-        <%= text_field_tag(:party, params[:example_party] == 1 ? '' : params[:party] , class: "form-control mr-sm-2" , placeholder: "напр., " + params[:party], list: "party-datalist") %>
+        <%= text_field_tag(:party, params[:example_party] == 1 ? '' : params[:party] , class: "form-control mr-sm-2" , placeholder: "напр., " + params[:party], list: "party-datalist", autocomplete: "off" ) %>
         <i class="fa fa-chevron-down arrow-icon" aria-hidden="true"></i>
           <datalist id="party-datalist">
             <% @party.each do |m| %>
@@ -58,28 +71,35 @@
                       <i class="fa fa-square-o fa-stack-2x"></i>
                       <i class="fa  fa-download  fa-stack-1x"></i>
                     </span>
-                <a href="" >csv</a></li>
-            <li><span class="fa-stack ">
+                <a href="" id ="csv" >csv</a></li>
+            <li>
+              <a href="javascript:void(0)" id ="downpdf">
+                  <span class="fa-stack ">
                       <i class="fa fa-square-o fa-stack-2x"></i>
                       <i class="fa  fa-download  fa-stack-1x"></i>
-                    </span>
-                <a href="" >png</a></li>
+                  </span> png
+              </a>
+            </li>
             <li>
+
                     <span class="fa-stack ">
                     <i class="fa  fa-share-alt  fa-stack-1x"></i>
                         </span>
-                <a href="" >поширити</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.protocol  + request.host +  request.fullpath %>" target="_blank">поширити</a>
+
             </li>
         </ul>
     </div>
 </div>
 
 <div class="container">
+  <div id="png_div">
   <div class="col">
     <h2 class="center-justified text-xs-center text-uppercase">СУМІСНЕ ГОЛОСУВАННЯ <%= params[:party] %></h2>
     <div id="graph">
       <svg ></svg>
     </div>
+</div>
     <!--<div id="slider" style="width: 960px;"></div>-->
     <%#= link_to 'API', sumisne_holosuvannia_api_path %>
   </div>
@@ -101,12 +121,13 @@
               }).entries(Data)
                   .map(function(d){
 //                      console.log(d);
-                      return { Party: d.key, Value: d.value};
+                      return { Party: d.key.replace(/"/g, '&quot;').replace(/'/g, '&#39;'), Value: d.value};
 
                   });
               var party = [];
-              console.log(nested_data);
-              firs_party = nested_data.find(x => x.Party == '<%= params[:party].html_safe %>');
+              //console.log(nested_data);
+              firs_party = nested_data.find(x => x.Party ==  '<%= params[:party] %>' ); <%#= params[:party].html_safe %>
+
               nested_data.forEach(function (p, i) {
                     if (p.Party != firs_party.Party) {
                         party.push({party: p.Party, values: [p.Value, firs_party.Value ]})
@@ -118,16 +139,28 @@
                       return a - b;
                   });
                   if (val[1] == 0){
-                      return {party: d.party,  present: 0  }
+                      return {party: d.party.replace(/&quot;/g, '"').replace(/&#39;/g, "'"),  present: 0  }
                   } else {
-                      return {party: d.party,  present: Math.round((val[0]/val[1])*100)  }
+                      return {party: d.party.replace(/&quot;/g, '"').replace(/&#39;/g, "'"),  present: Math.round((val[0]/val[1])*100)  }
                   }
 
               });
               result = result.sort(function (a,b) {
                   return b.present - a.present;
               });
-//              console.log(result);
+              let csvContent = "data:text/csv;charset=utf-8,";
+              let head = "Сумісне голосування,Період,Партія,Відсоток\r\n";
+              csvContent += head
+              result.forEach(function(d){
+                  let part = "<%= params[:party] %>".replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+                  let row = part+",<%= params[:month]=="full" ? "Весь час" : params[:month] %>,"+d.party +"," + d.present;
+                  csvContent += row + "\r\n";
+              });
+              var encodedUri = encodeURI(csvContent);
+              var link = document.getElementById("csv");
+              link.setAttribute("href", encodedUri);
+              link.setAttribute("download", "voted_sum.csv");
+            // console.log(result);
               var svg = d3.select("#graph").append('svg'),
                   margin = {top: 20, right: 40, bottom: 30, left: 40},
                   width = (document.querySelector("#graph").clientWidth) - margin.left - margin.right,
