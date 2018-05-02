@@ -10,7 +10,7 @@ namespace :load_division do
       divisions = JSON.load(open("http://vinnitsavoted.oporaua.org/votes_events/#{uri}"))
       divisions.each do |d|
             date_vote =  DateTime.parse(d[0]["date_vote"]).strftime("%F")
-            mps =  Mp.where("? >= start_date and end_date >= ?", date, date).to_a.uniq(&:deputy_id)
+            mps =  Mp.where("? >= start_date and end_date >= ?", date_vote, date_vote).to_a.uniq(&:deputy_id)
         division = Division.find_or_create_by(
             date: date_vote,
             number: d[0]["number"],
