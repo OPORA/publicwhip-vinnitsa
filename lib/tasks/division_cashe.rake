@@ -41,8 +41,10 @@ namespace :division_cashe do
       turnout = possible_turnout - hash[:absent]
       rebellions = []
       v.group_by{|m| m.mp.faction}.each do |f|
-        whip_guess = Whip.find_by(party: f[0], division_id: division).whip_guess
-        rebellions << f[1].count{|v| v.vote != whip_guess and v.vote != "absent"}
+        if f[1].count >= 5
+         whip_guess = Whip.find_by(party: f[0], division_id: division).whip_guess
+         rebellions << f[1].count{|v| v.vote != whip_guess and v.vote != "absent"}
+        end
       end
       division_info = DivisionInfo.find_or_initialize_by(division_id: division)
       division_info.aye_votes = hash[:aye]
@@ -74,7 +76,7 @@ namespace :division_cashe do
       vote_id =  d[1].map{|v| v.id }
       p  vote_id
       Mp.pluck(:faction).uniq do |m1|
-        p m1
+        faction = ActiveRecord::Base.connection.quote(m1)
         sql = %Q{
        SELECT
         votes2.faction, count(*)
@@ -83,7 +85,7 @@ namespace :division_cashe do
        LEFT JOIN
         public.vote_factions AS votes2 ON votes1.division_id = votes2.division_id AND votes1.aye = votes2.aye AND votes1.faction != votes2.faction
        WHERE
-        votes1.faction = \'#{m1}\' AND votes1.division_id IN (#{vote_id.join(',')}) AND votes2.faction is not null
+        votes1.faction = #{faction} AND votes1.division_id IN (#{vote_id.join(',')}) AND votes2.faction is not null
        GROUP BY
         votes2.faction
         }

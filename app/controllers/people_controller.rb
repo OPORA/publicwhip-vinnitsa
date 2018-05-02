@@ -1,7 +1,7 @@
 class PeopleController < ApplicationController
   #Deputies
   def index
-    mps = Mp.includes(:mp_info).where(end_date: nil)
+    mps = Mp.includes(:mp_info).where(end_date: '9999-12-31')
     @mp = mps.order(:last_name)
     if params[:sort] == "faction"
       @filter = mps.order(:faction).map{|m| m.faction }.uniq
@@ -43,7 +43,7 @@ class PeopleController < ApplicationController
     if params[:per].nil?
       params[:per] = 8
     end
-    mps = Mp.includes(:mp_info).where(end_date:  nil).where('mp_infos.date_mp_info =  ?','9999-12-31').references(:mp_info)
+    mps = Mp.includes(:mp_info).where(end_date: '9999-12-31').where('mp_infos.date_mp_info =  ?','9999-12-31').references(:mp_info)
     if params[:sort] == "faction"
       @mps = mps.where(faction: params[:filter]).order(:faction, :last_name, :first_name, :middle_name, :okrug).page(params[:page]).per(params[:per])
     elsif params[:sort] == "distric"
@@ -90,13 +90,13 @@ class PeopleController < ApplicationController
     else
       mp_date = "9999-12-31"
     end
-    @mp = Mp.includes(:mp_info).where(last_name: mp_find[0], first_name: mp_find[1], middle_name: mp_find[2]).where('mp_infos.date_mp_info = ?',  mp_date).references(:mp_info).first
+    @mp = Mp.includes(:mp_info).where(last_name: mp_find[0], first_name: mp_find[1], middle_name: mp_find[2]).where('mp_infos.date_mp_info = ?',  mp_date).references(:mp_info).last
     p @mp
     if @mp
       if params[:vote] == "friends"
-        return get_friends(@mp.deputy_id)
+        return get_friends(@mp.id)
       else
-        return get_divisions(@mp.deputy_id, @mp.faction)
+        return get_divisions(@mp.id, @mp.faction)
       end
     else
       #redirect_to people_path, :notice => "Не занйдено #{params[:mp]}"

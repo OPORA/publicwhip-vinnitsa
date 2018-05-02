@@ -39,7 +39,7 @@
     </ul>
     <ul class="social col-4 pull-right text-uppercase">
       <li>
-        <%= link_to api_mp_path(deputy_id: mp.deputy_id, format: :csv) do %>
+        <%= link_to api_mp_path(deputy_id: mp.id, format: :csv) do %>
                     <span class="fa-stack ">
                       <i class="fa fa-square-o fa-stack-2x"></i>
                       <i class="fa  fa-download  fa-stack-1x"></i>
@@ -59,11 +59,10 @@
                     <span class="fa-stack ">
                     <i class="fa  fa-share-alt  fa-stack-1x"></i>
                         </span>
-        поширити</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.protocol  + request.host +  request.fullpath %>" target="_blank">поширити</a>
       </li>
     </ul>
-  </div>
-
+  </div>`
   <div class="row center-justified first">
     <div class="col-4 text-uppercase">
       <div id="attendance-fraction"
@@ -89,6 +88,7 @@
       <p><!--Обрано за списком партії з --></p>
     </div>
     <div class="col-4 text-uppercase">
+      <% if  mp.mp_info.rebellions_fraction %>
       <div id="rebellions-fraction"
            data-percentage="<%=  fraction_to_percentage_display(mp.mp_info.rebellions_fraction) %>"
            data-track-width="5"
@@ -99,13 +99,16 @@
            data-stroke-spacing="0">
       </div>
       <p style="margin-top:15px;">голосування проти фракції</p>
+          <script>
+              $( document ).ready(function() {
+                  var wrapper2 = document.getElementById('rebellions-fraction');
+                  CreateRadialBar(wrapper2);
+              });
+          </script>
+      <% else %>
+          <p style="margin-top:15px;">Індекс голосувань проти фракції неможливо встановити</p>
+    <% end %>
     </div>
-    <script>
-        $( document ).ready(function() {
-            var wrapper2 = document.getElementById('rebellions-fraction');
-            CreateRadialBar(wrapper2);
-        });
-    </script>
   </div>
 </div>
 

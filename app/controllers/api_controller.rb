@@ -52,16 +52,16 @@ class ApiController < ApplicationController
   def mps
     @mps = Mp.all
     respond_to do |format|
-      format.json  {render :json => @mps.to_json(except: [:id, :created_at,  :updated_at ])}
+      format.json  {render :json => @mps.to_json(except: [:created_at,  :updated_at ])}
       format.csv  { send_data @mps.to_csv  }
     end
   end
   def mp
     deputy_id = params[:deputy_id].to_i
-    @mp = Mp.find_by_deputy_id(deputy_id)
+    @mp = Mp.find_by_id(deputy_id)
     unless @mp.blank?
       respond_to do |format|
-        format.json  {render :json => @mp.to_json(except: [:id, :created_at,  :updated_at ],
+        format.json  {render :json => @mp.to_json(except: [:created_at,  :updated_at ],
                                                   :include => {
                                                       mp_infos: {
                                                           only: [:rebellions,

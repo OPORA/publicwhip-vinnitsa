@@ -6,9 +6,7 @@ module PeopleHelper
   def member_role(faction, okrug)
     faction = "Позафракційний" if faction.nil?
     first =  '"' + faction +  '"'
-    if okrug == 0
-      first +  "<br>" + "перший кандидат"
-    elsif not okrug.nil?
+    unless okrug.nil?
       first +  "<br>" + "обрано по округу номер #{okrug}"
     else
       first
@@ -27,13 +25,14 @@ module PeopleHelper
         "Ім'ям"
      end
   end
-  def fraction_to_percentage_display(fraction, options = {precision: 2, significant: true})
+  def fraction_to_percentage_display(fraction, options = {precision: 1, significant: false})
     if fraction
       percentage = fraction * 100
       if percentage == 0
         return "0%"
       else
-        number_to_percentage(percentage, options)
+        "#{percentage.to_i}" + "%"
+        #number_to_percentage(percentage, options)
       end
     else
       'n/a'

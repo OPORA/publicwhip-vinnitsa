@@ -13,6 +13,6 @@ class CreateMpInfos < ActiveRecord::Migration[5.1]
 
       t.timestamps null: false
     end
-    add_foreign_key :mp_infos, :mps, column: :deputy_id, primary_key: :deputy_id
+
   end
 end

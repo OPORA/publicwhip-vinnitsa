@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20171113225834) do
     t.date "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["deputy_id"], name: "index_mps_on_deputy_id", unique: true
+    t.index ["id"], name: "index_mps_on_id", unique: true
   end
 
   create_table "party_friends", force: :cascade do |t|
@@ -88,7 +88,6 @@ ActiveRecord::Schema.define(version: 20171113225834) do
 
   create_table "vote_factions", force: :cascade do |t|
     t.string "faction"
-    t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "division_id"
@@ -117,10 +116,7 @@ ActiveRecord::Schema.define(version: 20171113225834) do
   end
 
   add_foreign_key "division_infos", "divisions"
-  add_foreign_key "mp_friends", "mps", column: "deputy_id", primary_key: "deputy_id"
-  add_foreign_key "mp_friends", "mps", column: "friend_deputy_id", primary_key: "deputy_id"
-  add_foreign_key "mp_infos", "mps", column: "deputy_id", primary_key: "deputy_id"
   add_foreign_key "votes", "divisions"
-  add_foreign_key "votes", "mps", column: "deputy_id", primary_key: "deputy_id"
+  add_foreign_key "votes", "mps", column: "deputy_id"
   add_foreign_key "whips", "divisions"
 end

@@ -29,9 +29,15 @@
       </div>
     </div>
 <% else %>
-    <p class="text-xs-center "><%= @mp.short_name %> голосував проти лінії фракції політичної партії
-      "<%= @mp.faction %>" <%= @mp.mp_info.rebellions %> разів</p>
-    <div id="list_vote">
-      <%= render "voted", division: @division, mp: @mp %>
-    </div>
+    <% if @mp.mp_info.rebellions %>
+      <p class="text-xs-center "><%= @mp.short_name %> голосував проти лінії фракції політичної партії
+        "<%= @mp.faction %>" <%= @mp.mp_info.rebellions %> разів</p>
+      <div id="list_vote">
+        <%= render "voted", division: @division, mp: @mp %>
+      </div>
+    <% else %>
+        <p class="text-xs-center "><%= @mp.short_name %> голосуваня проти лінії фракції "<%= @mp.faction %>" неможливо встановити</p>
+        <div id="list_vote">
+        </div>
+    <% end %>
 <% end %>

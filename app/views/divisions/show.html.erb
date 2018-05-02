@@ -1,155 +1,155 @@
 <% content_for :title, "Голосування — Як Голосує Твій Депутат?" %>
 
 <div id="divisionshow" class="container">
-  <h1 class="text-uppercase center-justified text-xs-center">Голосування <%= Settings.name_rada %></h1>
+    <h1 class="text-uppercase center-justified text-xs-center">Голосування <%= Settings.name_rada %></h1>
 
-  <div class="row">
-    <div class="col">
-      <ul class="social text-uppercase">
-        <li>
-          <!--<span class="fa-stack ">-->
-          <!--<i class="fa fa-square-o fa-stack-2x"></i>-->
-          <!--<i class="fa  fa-download  fa-stack-1x"></i>-->
-          <!--</span>-->
-          <!--<a href="" >текст рішення</a>-->
-        </li>
-      </ul></div>
-    <ul class="social col-4 pull-right text-uppercase">
-      <li>
-        <%= link_to divisions_show_path(@divisions.first.date, @divisions.first.number, format: :csv) do %>
+    <div class="row">
+        <div class="col">
+            <ul class="social text-uppercase">
+                <li>
+                    <!--<span class="fa-stack ">-->
+                      <!--<i class="fa fa-square-o fa-stack-2x"></i>-->
+                      <!--<i class="fa  fa-download  fa-stack-1x"></i>-->
+                    <!--</span>-->
+                    <!--<a href="" >текст рішення</a>-->
+                </li>
+            </ul></div>
+        <ul class="social col-4 pull-right text-uppercase">
+            <li>
+              <%= link_to divisions_show_path(@divisions.first.date, @divisions.first.number, format: :csv) do %>
                     <span class="fa-stack ">
                       <i class="fa fa-square-o fa-stack-2x"></i>
                       <i class="fa  fa-download  fa-stack-1x"></i>
                     </span>csv
-        <% end %>
-      </li>
-      <li>
-        <!--<span class="fa-stack ">-->
-        <!--<i class="fa fa-square-o fa-stack-2x"></i>-->
-        <!--<i class="fa  fa-download  fa-stack-1x"></i>-->
-        <!--</span>-->
-        <!--<a href="" >png</a>-->
-      </li>
-      <li>
+              <% end %>
+            </li>
+            <li>
+              <!--<span class="fa-stack ">-->
+                      <!--<i class="fa fa-square-o fa-stack-2x"></i>-->
+                      <!--<i class="fa  fa-download  fa-stack-1x"></i>-->
+              <!--</span>-->
+              <!--<a href="" >png</a>-->
+            </li>
+            <li>
                     <span class="fa-stack ">
                     <i class="fa  fa-share-alt  fa-stack-1x"></i>
                         </span>
-        <a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.protocol  + request.host +  request.fullpath %>" target="_blank">поширити</a>
-      </li>
-    </ul>
-  </div>
-
-  <div class="row">
-    <div class="container">
-      <% @divisions.each do |d| %>
-          <div class="col-12 pull-right card">
-            <div class="row">
-              <div class="col text-uppercase text-xs-center">
-                <p class="approve col-12">
-                  <i class="fa <%=  d.result.include?("НЕ ПРИЙНЯТО") ? "fa-times-circle" : "fa-check-circle"  %>" aria-hidden="true"></i>
-                  <span><%= d.result %></span></p>
-                <p class="card-date"><%= d.date.strftime('%d.%m.%Y') %>, <%= Time.parse(d.clock_time).strftime('%H:%M') %>  </p>
-              </div>
-              <div class="col-10 card-text">
-
-                <p><%=  d.name  %></p>
-              </div>
-            </div>
-          </div>
-      <% end %>
+              <a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.protocol  + request.host +  request.fullpath %>" target="_blank">поширити</a>
+            </li>
+        </ul>
     </div>
-  </div>
 
-  <div class="container-fluid">
-    <% @divisions.each do |d| %>
-
-        <h2 class="text-uppercase center-justified ">Статистика голосування </h2>
-        <% if d.division_info.rebellions > 0 %>
-            <p>Відбулося <span class="rebel"><%= d.division_info.rebellions %> голосування</span> проти лінії фракції.</p>
-        <% else %>
-            <p>Ніхто не голосував проти лінії фракції</p>
-        <% end %>
-
-        <% @whips.each_with_index  do |w, i| %>
-            <div id="accordion-<%= i %>" class="row panel-group">
-              <div class="col-12 panel panel-default">
-                <div class="panel-heading">
-                  <a data-toggle="collapse" data-parent="#accordion-<%= i %>" href="#detail-<%= i %>" class="collapsed" aria-expanded="false">
-                    <h3 class="panel-title text-uppercase">
-                      <%= w.party %>
-                    </h3>
-                    <div class="row golos">
-                      <div class="col text-uppercase <%= w.whip_guess != "aye" and w.aye_votes > 0 ? "rebel" : "normal" %>">за <span><%= w.aye_votes %></span></div>
-                      <div class="col text-uppercase <%= w.whip_guess != "against" and w.against > 0 ? "rebel" : "normal" %>">проти <span><%= w.against %></span></div>
-                      <div class="col text-uppercase <%= w.whip_guess != "abstain" and  w.abstain > 0 ? "rebel" : "normal" %>">утримався <span><%= w.abstain %></span></div>
-                      <div class="col text-uppercase <%= w.whip_guess != "not_voted" and  w.no_votes > 0 ? "rebel" : "normal" %>">не голосував <span><%= w.no_votes %></span></div>
-                      <div class="col-4 text-uppercase">
-                        <div class="row">
-                          присутність
-                          <div class="progress col-8">
-                            <div class="progress-bar-<%= i %> progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" >
-                              <%= fraction_to_percentage_display((w.aye_votes + w.against + w.abstain + w.no_votes).to_f/(w.aye_votes + w.against + w.abstain + w.no_votes + w.absent))%>
-                            </div>
-                          </div>
-                          <i class="chevron fa fa-fw" ></i>
-                        </div>
-                        <script type="text/javascript">
-                            //<![CDATA[
-                            $( document ).ready(function(){
-                                $(".progress-bar-<%= i %> ").animate({
-                                    width: "<%= fraction_to_percentage_display((w.aye_votes + w.against + w.abstain + w.no_votes).to_f/(w.aye_votes + w.against + w.abstain + w.no_votes + w.absent))%>"
-                                }, 2500);
-                            });
-                            //]]>
-                        </script>
-                      </div>
+    <div class="row">
+        <div class="container">
+            <% @divisions.each do |d| %>
+            <div class="col-12 pull-right card">
+                <div class="row">
+                    <div class="col text-uppercase text-xs-center">
+                        <p class="approve col-12">
+                            <i class="fa <%=  d.result.gsub(/[[:space:]]/, '') == "Прийнято" ? "fa-check-circle" : "fa-times-circle"  %>" aria-hidden="true"></i>
+                            <span><%= d.result %></span></p>
+                        <p class="card-date"><%= d.date.strftime('%d.%m.%Y') %>, <%= Time.parse(d.clock_time).strftime('%H:%M') %>  </p>
                     </div>
-                  </a>
+                    <div class="col-10 card-text">
+
+                        <p><%=  d.name  %></p>
+                    </div>
                 </div>
+            </div>
+            <% end %>
+        </div>
+    </div>
 
-                <div id="detail-<%= i %>" class="panel-collapse detail collapse container" aria-expanded="false" >
+<div class="container-fluid">
+  <% @divisions.each do |d| %>
+
+      <h2 class="text-uppercase center-justified ">Статистика голосування </h2>
+      <% if d.division_info.rebellions > 0 %>
+        <p>Відбулося <span class="rebel"><%= d.division_info.rebellions %> голосування</span> проти лінії фракції.</p>
+      <% else %>
+        <p>Ніхто не голосував проти лінії фракції</p>
+      <% end %>
+
+    <% @whips.each_with_index  do |w, i| %>
+      <div id="accordion-<%= i %>" class="row panel-group">
+          <div class="col-12 panel panel-default">
+              <div class="panel-heading">
+                  <a data-toggle="collapse" data-parent="#accordion-<%= i %>" href="#detail-<%= i %>" class="collapsed" aria-expanded="false">
+                      <h3 class="panel-title text-uppercase">
+                      <%= w.party %>
+                      </h3>
+                      <div class="row golos">
+                          <div class="col text-uppercase <%= w.whip_guess != "aye" and w.aye_votes > 0 ? "rebel" : "normal" %>">за <span><%= w.aye_votes %></span></div>
+                          <div class="col text-uppercase <%= w.whip_guess != "against" and w.against > 0 ? "rebel" : "normal" %>">проти <span><%= w.against %></span></div>
+                          <div class="col text-uppercase <%= w.whip_guess != "abstain" and  w.abstain > 0 ? "rebel" : "normal" %>">утримався <span><%= w.abstain %></span></div>
+                          <div class="col text-uppercase <%= w.whip_guess != "not_voted" and  w.no_votes > 0 ? "rebel" : "normal" %>">не голосував <span><%= w.no_votes %></span></div>
+                          <div class="col-4 text-uppercase">
+                              <div class="row">
+                                  присутність
+                                  <div class="progress col-8">
+                                      <div class="progress-bar-<%= i %> progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" >
+                                          <%= fraction_to_percentage_display((w.aye_votes + w.against + w.abstain + w.no_votes).to_f/(w.aye_votes + w.against + w.abstain + w.no_votes + w.absent))%>
+                                      </div>
+                                  </div>
+                                  <i class="chevron fa fa-fw" ></i>
+                              </div>
+                              <script type="text/javascript">
+                                  //<![CDATA[
+                                  $( document ).ready(function(){
+                                      $(".progress-bar-<%= i %> ").animate({
+                                          width: "<%= fraction_to_percentage_display((w.aye_votes + w.against + w.abstain + w.no_votes).to_f/(w.aye_votes + w.against + w.abstain + w.no_votes + w.absent))%>"
+                                      }, 2500);
+                                  });
+                                  //]]>
+                              </script>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+              <div id="detail-<%= i %>" class="panel-collapse detail collapse container" aria-expanded="false" >
                   <div class="row">
-                    <div class="col-4 text-uppercase">
-                      результати голосування
-                    </div>
+                      <div class="col-4 text-uppercase">
+                          результати голосування
+                      </div>
 
-                    <div class="col-8">
-                      <% @voted[w.party].each do |v| %>
+                      <div class="col-8">
+                          <% @voted[w.party].each do |v| %>
                           <div  class="member-row member-row-<%= i %> party-member-row row" >
 
-                            <div class="panel-body col-8">
-                              <%= link_to v[:name], show_people_path(v[:url]), target: "_blank" %>
-                            </div>
+                              <div class="panel-body col-8">
+                                  <%= link_to v[:name], show_people_path(v[:url]), target: "_blank" %>
+                              </div>
 
-                            <div class="col-4 text-uppercase <%=  w.whip_guess == v[:vote] or  v[:vote] =="absent" ? "": "rebel"   %>"><%= result_voted_mp(v[:vote]) %></div>
+                              <div class="col-4 text-uppercase <%=  w.whip_guess == v[:vote] or  v[:vote] =="absent" ? "": "rebel"   %>"><%= result_voted_mp(v[:vote]) %></div>
 
                           </div>
-                      <% end %>
-                    </div>
+                          <% end %>
+                      </div>
                   </div>
-                </div>
               </div>
-            </div>
-        <% end %>
+          </div>
+      </div>
+    <% end %>
 
-        </div>
+</div>
 
-        <div class="container-fluid all">
+<div class="container-fluid all">
 
-          <h3 class="panel-title text-uppercase">Всього</h3>
+        <h3 class="panel-title text-uppercase">Всього</h3>
 
-          <div class="row golos detail">
-            <div class="col text-uppercase ">Так  <span ><%=  d.division_info.aye_votes %> </span></div>
-            <div class="col text-uppercase ">Ні <span>  <%=  d.division_info.against %> </span></div>
-            <div class="col text-uppercase  ">Утрималися <span><%=  d.division_info.abstain %> </span></div>
-            <div class="col text-uppercase ">Не голосували <span><%=  d.division_info.no_votes %> </span></div>
-            <div class="col-4 text-uppercase">
-              <div class="row">
+    <div class="row golos detail">
+        <div class="col text-uppercase ">Так  <span ><%=  d.division_info.aye_votes %> </span></div>
+        <div class="col text-uppercase ">Ні <span>  <%=  d.division_info.against %> </span></div>
+        <div class="col text-uppercase  ">Утрималися <span><%=  d.division_info.abstain %> </span></div>
+        <div class="col text-uppercase ">Не голосували <span><%=  d.division_info.no_votes %> </span></div>
+        <div class="col-4 text-uppercase">
+            <div class="row">
                 присутність
                 <div class="progress col-8">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                    <%= fraction_to_percentage_display(d.division_info.attendance_division) %>
-                  </div>
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        <%= fraction_to_percentage_display(d.division_info.attendance_division) %>
+                    </div>
                 </div>
                 <script type="text/javascript">
                     //<![CDATA[
@@ -160,10 +160,10 @@
                     });
                     //]]>
                 </script>
-              </div>
-
             </div>
-          </div>
+
         </div>
-    <% end %>
     </div>
+</div>
+<% end %>
+</div>

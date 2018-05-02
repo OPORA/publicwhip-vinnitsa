@@ -67,7 +67,7 @@ body{
     display: none;
 }
 header{
-    background: url(fon_home.png) no-repeat center center;
+    background: url(fon_home.jpg) no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -76,6 +76,8 @@ header{
     /*background-color: rgba(40,40,40,0.6);*/
     color:#fff;
     margin-bottom: 75px;
+    box-shadow:0 0 0 508px rgba(0, 0, 0, 0.33) inset;
+
 }
 .logo p{
     height: 20px;
@@ -535,4 +537,7 @@ footer span+span{
 #first-block [class*="row"] + [class*="row"], #second-block [class*="row"] + [class*="row"] {
     /*margin: 0 0 0 0;*/
     margin-top: 25px;
+}
+#png_div {
+    background-color: white;
 }

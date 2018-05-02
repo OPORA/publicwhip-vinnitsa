@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   def index
     @mps = Mp.order(last_name: :asc).map{|m| m.last_name + " " + m.first_name + " " + m.middle_name}
     @last_division = Division.includes(:division_info).order(date: :asc).last(4)
-    @top_mp_rebellions = Mp.includes(:mp_info).where(end_date: nil).where('mp_infos.date_mp_info =  ?','9999-12-31').references(:mp_info).to_a.sort_by{ |m| [-(m.mp_info.attendance_fraction || -1), m.last_name, m.first_name, m.middle_name, m.faction, m.okrug ]}.reverse[0 .. 3]
+    @top_mp_rebellions = Mp.includes(:mp_info).where(end_date: '9999-12-31').where('mp_infos.date_mp_info =  ?','9999-12-31').references(:mp_info).to_a.sort_by{ |m| [-(m.mp_info.attendance_fraction || -1), m.last_name, m.first_name, m.middle_name, m.faction, m.okrug ]}.reverse[0 .. 3]
     respond_to do |format|
       format.html
       format.js
