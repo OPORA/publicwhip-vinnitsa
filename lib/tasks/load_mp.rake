@@ -1,9 +1,9 @@
 require 'open-uri'
 
 namespace :load_mp do
-  desc "Load mp http://lvivmp.oporaua.org/"
+  desc "Load mp https://scrapervinnitsadeputy.herokuapp.com/"
   task :all => :environment do
-    data_mps = JSON.load(open("http://#{Settings.name_site}mp.oporaua.org/"))
+    data_mps = JSON.load(open("https://scrapervinnitsadeputy.herokuapp.com/"))
     data_mps.each do |m|
       if m["end_date"].nil?
         end_date = "9999-12-31"
@@ -16,7 +16,7 @@ namespace :load_mp do
   end
   desc "Load picture image deputy"
   task :image => :environment do
-    mps = JSON.load(open("http://#{Settings.name_site}mp.oporaua.org/"))
+    mps = JSON.load(open("https://scrapervinnitsadeputy.herokuapp.com/"))
     mps.each do |m|
       p m["photo_url"]
       photo = MiniMagick::Image.open(URI.encode(m["photo_url"]))
