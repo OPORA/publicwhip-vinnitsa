@@ -20,6 +20,9 @@ class DivisionsController < ApplicationController
     divisions = Division.includes(:division_info)
     unless params[:divisions].blank?
       divisions = divisions.find_by_search_query(params[:divisions])
+      if params[:sort].blank?
+        params[:sort] = "attendance"
+      end
     end
     @divisions =
         case params[:sort]
@@ -46,8 +49,8 @@ class DivisionsController < ApplicationController
               params[:last] = "3"
             end
             if params[:last] == "3"
-               params[:min_date] = (Date.today() - 3.month).strftime('%d.%m.%Y')
-               params[:max_date] = Date.today().strftime('%d.%m.%Y')
+              params[:min_date] = (Date.today() - 3.month).strftime('%d.%m.%Y')
+              params[:max_date] = Date.today().strftime('%d.%m.%Y')
             elsif params[:last] == "1"
               min_date = Date.strptime((Division.order(date: :asc).pluck(:date).last.strftime('%m.%Y')), '%m.%Y')
               params[:min_date] = min_date.strftime('%d.%m.%Y')
@@ -59,6 +62,11 @@ class DivisionsController < ApplicationController
   def show
     @divisions = Division.includes(:division_info).where(date: params[:date], number: params[:id])
     @whips = Whip.where(division_id: @divisions.first.id).order(:party)
-    @voted = Vote.includes(:mp).where(division_id: @divisions.first.id).order('mps.faction').to_a.map{|v| {name: v.mp.full_name, url: v.mp.url_name,  vote: v.vote, party: v.mp.faction } }.group_by{|f| f[:party]}
+    vote = Vote.includes(:mp, :division).where(division_id: @divisions.first.id).order('mps.faction')
+    @voted = vote.to_a.map{|v| {name: v.mp.full_name, url: v.mp.url_name,  vote: v.vote, party: v.mp.faction } }.group_by{|f| f[:party]}
+    respond_to do |format|
+      format.html
+      format.csv { send_data vote.to_div_csv , :filename =>  vote.first.division.name + '.csv' }
+    end
   end
 end
