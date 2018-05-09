@@ -4,9 +4,9 @@
 
 [https://vinnytsia.rada4you.org/api/mps.json](https://vinnytsia.rada4you.org/api/mps.json)
 
-** інформація про конкретно депутата за полем `deputy_id` **
+** інформація про конкретно депутата за полем `id` **
  
-[https://vinnytsia.rada4you.org/api/mp.json?deputy_id=140](https://vinnytsia.rada4you.org/api/mp.json?deputy_id=140) 
+[https://vinnytsia.rada4you.org/api/mp.json?deputy_id=2](https://vinnytsia.rada4you.org/api/mp.json?deputy_id=2) 
 
 #по голосуванням
 **перші 25 голосування**
@@ -23,7 +23,7 @@
 
 [https://vinnytsia.rada4you.org/api/mps.csv](https://vinnytsia.rada4you.org/api/mps.csv)
 
-[https://vinnytsia.rada4you.org/api/mp.csv?deputy_id=3463](https://vinnytsia.rada4you.org/api/mp.csv?deputy_id=3463)
+[https://vinnytsia.rada4you.org/api/mp.csv?deputy_id=2](https://vinnytsia.rada4you.org/api/mp.csv?deputy_id=2)
 
 #по голосуванням
 [https://vinnytsia.rada4you.org/api/divisions.csv](https://vinnytsia.rada4you.org/api/divisions.csv)
