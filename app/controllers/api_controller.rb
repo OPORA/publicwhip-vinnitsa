@@ -7,7 +7,7 @@ class ApiController < ApplicationController
     end
   end
   def divisions
-    @divisions = Division.all
+    @divisions = Division.all.order(date: :desc)
     div =  @divisions.page(params[:page])
     current = div.current_page
     total = div.total_pages
