@@ -1,6 +1,5 @@
 require 'mina/rails'
 require 'mina/git'
-
 # require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 require 'mina/rvm'    # for rvm support. (http://rvm.io)
 
@@ -11,8 +10,8 @@ require 'mina/rvm'    # for rvm support. (http://rvm.io)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
 set :domain, 'ruby.oporaua.org'
-set :deploy_to, "/home/publicwhip-drohobych/"
-set :repository, "git@github.com:OPORA/publicwhip-drohobych.git"
+set :deploy_to, '/home/publicwhip-vinnytsia'
+set :repository, 'git@github.com:OPORA/publicwhip-vinnitsa.git'
 set :branch, 'policy'
 
 # For system-wide RVM install.
